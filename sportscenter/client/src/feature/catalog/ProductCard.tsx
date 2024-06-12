@@ -1,12 +1,18 @@
 
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Product } from '../../app/models/products';
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
     product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
+    // adding this styling that can change the Avtar tag to secondary color when user change the screen to dark mode
+    const theme = useTheme();
+    const avatarColor = theme.palette.mode === 'dark' ? 'secondary.main' : 'primary.main';
+
+
     const extractImageName = (item: Product): string | null => {
         if (item && item.pictureUrl) {
             const parts = item.pictureUrl.split('/');
@@ -29,7 +35,7 @@ const ProductCard = ({ product }: Props) => {
         <>
             <Card>
                 <CardHeader avatar={
-                    <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ bgcolor: avatarColor }}>
                         {product.name.charAt(0).toUpperCase()}
                     </Avatar>
                 }
