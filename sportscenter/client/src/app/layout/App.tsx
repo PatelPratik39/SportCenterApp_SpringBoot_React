@@ -1,4 +1,4 @@
-import Catalog from "../../feature/Catalog";
+import Catalog from "../../feature/catalog/Catalog";
 
 function App() {
 
