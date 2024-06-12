@@ -5,10 +5,10 @@ import com.ecommerce.sportscenter.model.ProductResponse;
 import com.ecommerce.sportscenter.repository.ProductRepository;
 import com.ecommerce.sportscenter.service.ProductService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -22,14 +22,12 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductResponse> getAllProducts() {
+    public Page<ProductResponse> getAllProducts(Pageable pageable) {
         log.info("Fetching ALl the Products from database ++++");
 //        fetch all products from product repository
-        List<Product> allProducts = productRepository.findAll();
+        Page<Product> productPage = productRepository.findAll(pageable);
 //      convert all fetched product lists to a dto object(productResponse)
-        List<ProductResponse> productResponses = allProducts.stream()
-                .map(this::convertToProductResponse)
-                .collect(Collectors.toList());
+        Page<ProductResponse> productResponses = productPage.map(this::convertToProductResponse);
         log.info("Fetched All Products!!!!");
         return productResponses;
     }

@@ -6,6 +6,9 @@ import com.ecommerce.sportscenter.model.TypeResponse;
 import com.ecommerce.sportscenter.service.BrandService;
 import com.ecommerce.sportscenter.service.ProductService;
 import com.ecommerce.sportscenter.service.TypeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +35,12 @@ public class ProductController {
 
 //    Get All Products
     @GetMapping()
-    public ResponseEntity<List<ProductResponse>> getAllProducts(){
+    public ResponseEntity<Page<ProductResponse>> getAllProducts(@PageableDefault(size = 10) Pageable pageable){
 //        get all products
-        List<ProductResponse> allProducts = productService.getAllProducts();
+        Page<ProductResponse> allProducts = productService.getAllProducts(pageable);
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
-//  Get Product using Id
+//  Get Product using id
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") Integer productId){
         ProductResponse productResponse = productService.getProductById(productId);
