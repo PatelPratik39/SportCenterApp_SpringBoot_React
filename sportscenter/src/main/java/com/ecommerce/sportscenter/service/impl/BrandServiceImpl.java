@@ -27,15 +27,19 @@ public class BrandServiceImpl implements BrandService {
 //        fetch all the brand items from the repository
         List<Brand> brandList = brandRepository.findAll();
 //        now use "stream()" operator to map with Response
-        List<BrandResponse> brandResponses = brandList.stream().map(this::convertToBrandResponse).collect(Collectors.toList());
+//        List<BrandResponse> brandResponses = brandList.stream().map(this::convertToBrandResponse).collect(Collectors.toList());
+        List<BrandResponse> brandResponses = brandList
+                .stream()
+                .map(brand -> new BrandResponse(brand.getId(),brand.getName()))
+                .collect(Collectors.toList());
         log.info("Fetched All Brands ---- ");
         return brandResponses;
     }
 
-    private BrandResponse convertToBrandResponse(Brand brand) {
-        return BrandResponse.builder()
-                .id(brand.getId())
-                .name(brand.getName())
-                .build();
-    }
+//    private BrandResponse convertToBrandResponse(Brand brand) {
+//        return BrandResponse.builder()
+//                .id(brand.getId())
+//                .name(brand.getName())
+//                .build();
+//    }
 }

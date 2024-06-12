@@ -19,6 +19,6 @@ public class ProductResponse {
     private String description;
     private String price;
     private String pictureUrl;
-    private Brand brand;
-    private Type type;
+    private String productBrand;
+    private String productType;
 }
