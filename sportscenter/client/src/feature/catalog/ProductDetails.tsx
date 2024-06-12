@@ -32,7 +32,7 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/product/${id}`)
+    axios.get(`http://localhost:8080/api/products/${id}`)
       .then(response => setProduct(response.data))
       .catch(error => console.error(error))
       .finally(() => setLoading(false))
