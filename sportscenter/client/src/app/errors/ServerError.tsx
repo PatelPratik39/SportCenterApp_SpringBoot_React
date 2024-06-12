@@ -13,11 +13,11 @@ export default function ServerError() {
                 sx={{
                     height: 'auto',
                     width: '100%',
-                    maxHeight: { xs: 233, md: 400 },
-                    maxWidth: { xs: 350, md: 400 },
+                    maxHeight: { xs: 233, md: 700 },
+                    maxWidth: { xs: 350, md: 700 },
                     mb: 4,
                 }}
-                src="/images/server-error.png"
+                src="/images/Server_Error.jpg"
                 alt="500 Server Error"
             />
             <Typography variant="h4" component="h1" gutterBottom>
