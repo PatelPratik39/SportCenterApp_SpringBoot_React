@@ -17,19 +17,19 @@ const NotFoundError = () => {
                     sx={{
                         height: 'auto',
                         width: '100%',
-                        maxHeight: { xs: 233, md: 400 },
-                        maxWidth: { xs: 350, md: 400 },
+                        maxHeight: { xs: 233, md: 600 },
+                        maxWidth: { xs: 350, md: 600 },
                         mb: 4,
                     }}
-                    src="/images/page-not-found.png"
+                    src="/images/PageNotFound.jpg"
                     alt="404 Not Found"
                 />
                 <Typography variant="h4" component="h1" gutterBottom>
                     Oops! Page not found.
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                    We can't seem to find the page you're looking for.
-                </Typography>
+                {/* <Typography variant="subtitle1" gutterBottom>
+                Page not present
+                </Typography> */}
 
                 <Button variant="contained" color="primary" onClick={handleGoHome}>
                     Go Home
