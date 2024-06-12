@@ -45,7 +45,7 @@ public class ProductController {
     }
 
 //    get All Brand
-    @GetMapping("/brand")
+    @GetMapping("/brands")
     public ResponseEntity<List<BrandResponse>> getAllBrands(){
         List<BrandResponse> allBrands = brandService.getAllBrands();
         return new ResponseEntity<>(allBrands, HttpStatus.OK);
