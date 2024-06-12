@@ -1,8 +1,9 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
-import axios from 'axios'
+// import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Product } from '../../app/models/products';
+import api from "../../app/api/api";
 
 
 
@@ -32,8 +33,8 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/products/${id}`)
-      .then(response => setProduct(response.data))
+    id && api.Store.details(parseInt(id)) 
+      .then(response => setProduct(response))
       .catch(error => console.error(error))
       .finally(() => setLoading(false))
   }, [id])
@@ -56,19 +57,19 @@ const ProductDetails = () => {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell>Name</TableCell>
+                  <TableCell><b>Name : </b></TableCell>
                   <TableCell>{product.name}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Description</TableCell>
+                  <TableCell><b>Description: </b></TableCell>
                   <TableCell>{product.description}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Type</TableCell>
+                  <TableCell><b>Type : </b></TableCell>
                   <TableCell>{product.productType}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Brand</TableCell>
+                  <TableCell><b>Brand : </b></TableCell>
                   <TableCell>{product.productBrand}</TableCell>
                 </TableRow>
               </TableBody>
