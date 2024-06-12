@@ -7,14 +7,13 @@ import com.ecommerce.sportscenter.service.BrandService;
 import com.ecommerce.sportscenter.service.ProductService;
 import com.ecommerce.sportscenter.service.TypeService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,9 +34,21 @@ public class ProductController {
 
 //    Get All Products
     @GetMapping()
-    public ResponseEntity<Page<ProductResponse>> getAllProducts(@PageableDefault(size = 10) Pageable pageable){
+    public ResponseEntity<Page<ProductResponse>> getAllProducts(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "brandId", required = false) Integer brandId,
+            @RequestParam(name = "typeId", required = false) Integer typeId,
+            @RequestParam(name = "sort", defaultValue = "name") String sort,
+            @RequestParam(name = "order", defaultValue = "asc") String order
+            ){
+//        Convert order to a sorted direction
+        Sort.Direction  direction = order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sorting = Sort.by(direction, sort);
+        Pageable pageable = PageRequest.of(page, size, sorting);
 //        get all products
-        Page<ProductResponse> allProducts = productService.getAllProducts(pageable);
+        Page<ProductResponse> allProducts = productService.getAllProducts(pageable, brandId, typeId, keyword);
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
 //  Get Product using id
