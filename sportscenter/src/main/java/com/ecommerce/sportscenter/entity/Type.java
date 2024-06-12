@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -24,4 +26,7 @@ public class Type {
     private Integer id;
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
+    private List<Product> products;
 }
