@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Product } from '../../app/models/products';
 import api from "../../app/api/api";
+import NotFoundError from "../../app/errors/NotFoundError";
 
 
 
@@ -41,7 +42,7 @@ const ProductDetails = () => {
 
   if (loading) return <h3>Loading product ..... </h3>
 
-  if (!product) return <h3>Product Not Found!!!</h3>
+  if (!product) return <NotFoundError />
 
   return (
     <>
