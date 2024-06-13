@@ -102,6 +102,32 @@ export class BasketService {
             throw new Error("Failed to delete the basket.")
         }
     }
+// Increament Qunatity from the cart
+    async incrementItemQuantity(itemId: number, quantity:number = 1, dispatch: Dispatch){
+        const basket = this.getCurrentBasket();
+        if(basket){
+            const item = basket.items.find((p)=>p.id === itemId);
+            if(item){
+                item.quantity += quantity;
+                if(item.quantity < 1){
+                    item.quantity = 1;
+                }
+                this.setBasket(basket, dispatch);
+            }
+        }
+    }
+
+    // Decrement Qunatity inside cart
+     async decrementItemQuantity(itemId: number, quantity:number = 1, dispatch: Dispatch){
+        const basket = this.getCurrentBasket();
+        if(basket){
+            const item = basket.items.find((p)=>p.id === itemId);
+            if(item && item.quantity > 1){
+                item.quantity -= quantity;
+                this.setBasket(basket, dispatch);
+            }
+        }
+    }
 
     private mapProductToBasket(item: Product): BasketItem {
         return {
