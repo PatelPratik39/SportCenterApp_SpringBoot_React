@@ -51,7 +51,7 @@ public class BasketController {
         basketItem.setId(itemResponse.getId());
         basketItem.setName(itemResponse.getName());
         basketItem.setDescription(itemResponse.getDescription());
-        basketItem.setPrice(itemResponse.getPrice());
+        basketItem.setPrice(itemResponse.getPrice ());
         basketItem.setPictureUrl(itemResponse.getPictureUrl());
         basketItem.setProductBrand(itemResponse.getProductBrand());
         basketItem.setProductType(itemResponse.getProductType());
