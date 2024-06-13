@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Product } from '../../app/models/products';
 import api from "../../app/api/api";
 import NotFoundError from "../../app/errors/NotFoundError";
+import Spinner from "../../app/layout/Spinner";
 
 
 
@@ -40,7 +41,7 @@ const ProductDetails = () => {
       .finally(() => setLoading(false))
   }, [id])
 
-  if (loading) return <h3>Loading product ..... </h3>
+  if (loading) return <Spinner message="Loading Product ....." />
 
   if (!product) return <NotFoundError />
 

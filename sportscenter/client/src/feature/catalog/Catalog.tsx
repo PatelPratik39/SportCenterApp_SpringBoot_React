@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Product } from "../../app/models/products"
 import ProductList from "./ProductList";
 import api from "../../app/api/api";
+import Spinner from "../../app/layout/Spinner";
 
 const Catalog = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -20,7 +21,7 @@ const Catalog = () => {
             .catch(error => console.log(error))
             .finally(() => setLoading(false));
     }, [])
-    if (loading) return <h3>Loading product ..... </h3>
+    if (loading) return <Spinner message="Loading Products ....." />
 
     if (!products) return <h3>Unable to Load Products </h3>
     return (
