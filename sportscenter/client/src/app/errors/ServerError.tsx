@@ -13,8 +13,8 @@ export default function ServerError() {
                 sx={{
                     height: 'auto',
                     width: '100%',
-                    maxHeight: { xs: 233, md: 700 },
-                    maxWidth: { xs: 350, md: 700 },
+                    maxHeight: { xs: 233, md: 600 },
+                    maxWidth: { xs: 350, md: 600 },
                     mb: 4,
                 }}
                 src="/images/Server_Error.jpg"

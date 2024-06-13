@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { router } from "../router/route";
+import { toast } from "react-toastify";
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -12,11 +13,11 @@ axios.interceptors.response.use(async response => {
     const {status} = error.response as AxiosResponse;
     switch(status){
         case 404:
-            console.log("Resource Not found");
+            toast.error("Resource Not found");
             router.navigate('/not-found');
             break;
         case 500:
-            console.log("Internal Server Error occured!!");
+            toast.error("Internal Server Error occured!!");
             router.navigate('/server-error');
             break;
        default:

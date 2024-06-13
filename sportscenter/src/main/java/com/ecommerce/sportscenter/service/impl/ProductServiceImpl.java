@@ -1,6 +1,7 @@
 package com.ecommerce.sportscenter.service.impl;
 
 import com.ecommerce.sportscenter.entity.Product;
+import com.ecommerce.sportscenter.exceptions.ProductNotFoundException;
 import com.ecommerce.sportscenter.model.ProductResponse;
 import com.ecommerce.sportscenter.repository.ProductRepository;
 import com.ecommerce.sportscenter.service.ProductService;
@@ -45,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse getProductById(Integer productId) {
         log.info("Fetching Product by Id : {} ", productId);
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product does not exists ....!!!! "));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product does not exists ....!!!! "));
 //        now convert the product to ProductResponse
         ProductResponse productResponse = convertToProductResponse(product);
         log.info("Fetched Product by Product Id: {}",productId);
