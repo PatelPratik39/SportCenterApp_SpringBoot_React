@@ -49,7 +49,7 @@ const ProductDetails = () => {
     <>
       <Grid container spacing={6}>
         <Grid item xs={6}>
-          <img src={"/images/products/" + extractImageName(product)} alt={product.name} style={{ width: '100%' }} />
+          <img src={"/images/products/" + extractImageName(product)} alt={product.name} style={{ width: 500}} />   
         </Grid>
         <Grid item xs={6}>
           <Typography variant='h3'>{product.name}</Typography>
