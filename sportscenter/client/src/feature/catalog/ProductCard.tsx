@@ -25,12 +25,20 @@ const ProductCard = ({ product }: Props) => {
         return null;
     }
     const formatPrice = (price: number): string => {
-        return new Intl.NumberFormat('en-In', {
+        return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'INR',
+            currency: 'USD',
             maximumFractionDigits: 2
         }).format(price);
     }
+
+    const titleLength = (title:string, maxLength:number): string => {
+        if(title.length <= maxLength){
+            return title;
+        }
+        return title.slice(0, maxLength) + '...';
+    }
+
 
 
     return (
@@ -41,7 +49,7 @@ const ProductCard = ({ product }: Props) => {
                         {product.name.charAt(0).toUpperCase()}
                     </Avatar>
                 }
-                    title={product.name}
+                    title={titleLength(product.name,40)}
                     titleTypographyProps={{ sx: { fontWeight: 'bold', color: 'primary.main' } }}
                 />
                 <CardMedia
