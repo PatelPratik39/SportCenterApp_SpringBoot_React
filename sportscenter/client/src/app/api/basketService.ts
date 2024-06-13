@@ -75,6 +75,33 @@ export class BasketService {
             throw new Error("Failed to create Basket.");
         }
     }
+    // Remove item from basket
+    async remove(itemId: number, dispatch: Dispatch){
+        const basket = this.getCurrentBasket();
+        if(basket){
+            const itemIndex = basket.items.findIndex((p)=>p.id === itemId);
+            if(itemIndex !== -1){
+                basket.items.splice(itemIndex, 1);
+                this.setBasket(basket, dispatch);
+            }
+            //check if basket is empty after removing the item
+            if(basket.items.length === 0){
+                //clear the the basket from the local storage
+                localStorage.removeItem('basket_id');
+                localStorage.removeItem('basket');
+            }
+        }
+    }
+
+    // Delete basket
+
+     async deleteBasket(basketId: string):Promise<void>{
+        try{
+            await axios.delete(`${this.apiUrl}/${basketId}`);
+        }catch(error){
+            throw new Error("Failed to delete the basket.")
+        }
+    }
 
     private mapProductToBasket(item: Product): BasketItem {
         return {
