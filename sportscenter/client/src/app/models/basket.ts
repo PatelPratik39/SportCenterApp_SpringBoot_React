@@ -14,8 +14,8 @@ export interface BasketItem {
   quantity: number
 }
 
-export interface BasketTotals {
+export interface BasketTotal {
     shipping: number;
-    subtotal: number;
+    subTotal: number;
     total: number;
 }
