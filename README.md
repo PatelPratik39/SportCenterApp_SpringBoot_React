@@ -8,10 +8,10 @@
     <version>2.5.0</version>
 </dependency>
 <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-			<version>3.3.0</version>
-		</dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+	<version>3.3.0</version>
+</dependency>
 ```
 
 # API End point validation usnig Swagger - UI
