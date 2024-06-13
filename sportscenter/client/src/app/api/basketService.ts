@@ -3,8 +3,9 @@ import { Basket, BasketItem, BasketTotal } from "../models/basket";
 import { Product } from "../models/products";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setBasket } from "../../feature/basket/basketSlice.ts";
+import { createId } from "@paralleldrive/cuid2";
 
-export class BasketService {
+ class BasketService {
 
     apiUrl = "http://localhost:8080/api/cart";
 
@@ -65,8 +66,8 @@ export class BasketService {
     private async createBasket(): Promise<Basket>{
         try{
             const newBasket: Basket = {
-                id:"admin123",
-                // id: createId(),
+                // id:"admin123",
+                id: createId(),
                 items: []
             }
             localStorage.setItem('basket_id', newBasket.id);
@@ -160,3 +161,5 @@ export class BasketService {
     }
 
 }
+
+export default new BasketService();

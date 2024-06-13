@@ -1,6 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { router } from "../router/route";
 import { toast } from "react-toastify";
+import basketService from "./basketService";
+import { Product } from "../models/products";
+import { Dispatch } from "@reduxjs/toolkit";
+
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
@@ -41,7 +45,50 @@ const Store = {
     details: (id: number) => requests.get(`products/${id}`)
 }
 
+const Basket = {
+    get: async() => {
+        try {
+            return await basketService.getBasket();
+            
+        } catch (error) {
+            console.error("Failed to Get Cart/ Basket : ", error);
+            throw error;
+            
+        }
+    },
+    addItem : async(product: Product, dispatch:  Dispatch) => {
+        try {
+            const result = await basketService.addItemToBasket(product,1,dispatch);
+            console.log(result);
+            return result;
+            
+        } catch (error) {
+            console.error("Failed to Add new Item to Cart/ Basket : ", error);
+            throw error;
+        }
+    },
+    removeItem : async(itemId: number, dispatch:Dispatch) => {
+        try {
+            await basketService.remove(itemId,dispatch)
+            
+        } catch (error) {
+            console.error("Failed to remove an item from basket:", error);
+            throw error;
+        }
+    },
+    deleteBasket : async(basketId:string) => {
+        try {
+            await basketService.deleteBasket(basketId)
+        } catch (error) {
+            console.log("Failed to delete the Basket");
+          throw error;
+        }
+    }
+}
+
+
 const api = {
-    Store
+    Store,
+    Basket
 }
 export default api;
