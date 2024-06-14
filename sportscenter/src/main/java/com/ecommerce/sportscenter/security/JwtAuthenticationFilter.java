@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import io.jsonwebtoken.security.SignatureException;
 
 import java.io.IOException;
 
@@ -28,41 +29,81 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtHelper = jwtHelper;
         this.userDetailsService = userDetailsService;
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            String requestHeader = request.getHeader("Authorization");
-            log.info("Header : {}", requestHeader);
+        final String requestHeader = request.getHeader("Authorization");
+        log.info("Authorization Header: {}", requestHeader);
 
-            String userName = null;
-            String token = null;
+        String userName = null;
+        String token = null;
 
-            if(requestHeader != null && requestHeader.startsWith("Bearer")){
-                token = requestHeader.substring(7);
-                try{
-                    userName = this.jwtHelper.getUserNameFromToken(token);
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            token = requestHeader.substring(7);
+            try {
+                userName = jwtHelper.getUserNameFromToken(token);
+            } catch (IllegalArgumentException e) {
+                log.error("Unable to get JWT Token");
+            } catch (ExpiredJwtException e) {
+                log.error("JWT Token has expired");
+            } catch (MalformedJwtException e) {
+                log.error("JWT Token is malformed");
+            } catch (SignatureException e) {
+                log.error("JWT Token signature validation failed");
+            }
+        } else {
+            log.warn("JWT token doesn't start with Bearer String");
+        }
 
-                }
-                catch (IllegalArgumentException | ExpiredJwtException | MalformedJwtException e){
-                    log.info("Jwt Token Processing Error!!");
-                    e.printStackTrace();
-                }
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            if (jwtHelper.validateToken(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             } else {
-                log.warn("JWT token doesn't start with Bearer String");
+                log.info("Invalid JWT Token");
             }
-            if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//                Fetch User details
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-                Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
-                if(validateToken){
-//                    set the Authentication
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                }else{
-                    log.info("Token is not valid");
-                }
-            }
-            filterChain.doFilter(request,response);
+        }
+
+        filterChain.doFilter(request, response);
     }
 }
+
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//            String requestHeader = request.getHeader("Authorization");
+//            log.info("Header : {}", requestHeader);
+//
+//            String userName = null;
+//            String token = null;
+//
+//            if(requestHeader != null && requestHeader.startsWith("Bearer ")){
+//                token = requestHeader.substring(7);
+//                try{
+//                    userName = this.jwtHelper.getUserNameFromToken(token);
+//
+//                }
+//                catch (IllegalArgumentException | ExpiredJwtException | MalformedJwtException e){
+//                    log.info("Jwt Token Processing Error!!");
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                log.warn("JWT token doesn't start with Bearer String");
+//            }
+//            if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+////                Fetch User details
+//                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
+//                Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
+//                if(validateToken){
+////                    set the Authentication
+//                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//                }else{
+//                    log.info("Token is not valid");
+//                }
+//            }
+//            filterChain.doFilter(request,response);
+//    }
+//}
