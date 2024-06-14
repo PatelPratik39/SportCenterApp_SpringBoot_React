@@ -29,3 +29,5 @@
 <img src="./cart0.png" alt="cart0" />
 
 <img src="./cartItems.png" alt="Cart" />
+
+<img src="./store1.png" alt="Store Page" />
