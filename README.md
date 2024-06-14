@@ -1,5 +1,5 @@
 # SportCenterApp_SpringBoot_React
-* Add Swagger dependency in pom.xml file 
+* Add Swagger and redis data dependency in pom.xml file 
 ```
 <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
 <dependency>
