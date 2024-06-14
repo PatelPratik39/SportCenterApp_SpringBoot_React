@@ -9,6 +9,24 @@ class BasketService {
 
     apiUrl = "http://localhost:8080/api/cart";
 
+    constructor() {
+        BasketService.clearBasketOnLoad();
+    }
+
+    static clearBasketOnLoad() {
+        localStorage.removeItem('basket');
+        localStorage.removeItem('basket_id');
+        console.log("Basket cleared from local storage on page load");
+    }
+
+    // Second way to make the local storage empty on reload the page
+
+    // clearBasketOnLoad() {
+    //     localStorage.removeItem('basket');
+    //     localStorage.removeItem('basket_id');
+    //     console.log("Basket cleared from local storage on page load");
+    // }
+
     async getBasketFromAPI() {
         try {
             const response = await axios.get<Basket>(`${this.apiUrl}`);
@@ -90,15 +108,19 @@ class BasketService {
                 //clear the the basket from the local storage
                 localStorage.removeItem('basket_id');
                 localStorage.removeItem('basket');
+                dispatch(setBasket(null));  // Update state to reflect empty basket
             }
         }
     }
 
     // Delete basket
 
-     async deleteBasket(basketId: string):Promise<void>{
+     async deleteBasket(basketId: string, dispatch: Dispatch):Promise<void>{
         try{
             await axios.delete(`${this.apiUrl}/${basketId}`);
+            localStorage.removeItem('basket_id');
+            localStorage.removeItem('basket');
+            dispatch(setBasket(null)); // Update state to reflect empty basket
         }catch(error){
             throw new Error("Failed to delete the basket.")
         }
@@ -161,5 +183,6 @@ class BasketService {
     }
 
 }
-
+// const basketService = new BasketService();
 export default new BasketService();
+// basketService.clearBasketOnLoad();
