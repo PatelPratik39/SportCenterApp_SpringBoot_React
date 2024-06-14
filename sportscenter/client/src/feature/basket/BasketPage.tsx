@@ -3,11 +3,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Product } from "../../app/models/products";
 import { Add, Remove } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/store/ConfigureStores";
+import api from "../../app/api/api";
 
 
 const BasketPage = () => {
+    const { basket } = useAppSelector(state => state.basket);
+    const dispatch = useAppDispatch();
+    const { Basket: BasketActions } = api;
 
 
+    const removeItem = (productId: number) => {
+        BasketActions.removeItem(productId, dispatch);
+    }
+
+    const decrementItem = (productId: number, quantity: number = 1) => {
+        BasketActions.decrementItemQuantity(productId, quantity, dispatch);
+    };
+    const incrementItem = (productId: number, quantity: number = 1) => {
+        BasketActions.incrementItemQuantity(productId, quantity, dispatch);
+    };
     // Define the extractImageName function
     const extractImageName = (item: Product): string | null => {
         if (item && item.pictureUrl) {
@@ -27,7 +42,10 @@ const BasketPage = () => {
             minimumFractionDigits: 2
         }).format(price);
     };
-    // if (!basket || basket.items.length === 0) return <Typography variant="h3">Your basket is empty. Please add few items!!!</Typography>
+    if (!basket || basket.items.length === 0) return (
+        <Box display="flex" justifyContent="center" alignItems="center" height="20vh">
+            <Typography variant="h3">Your basket is empty!!!</Typography>
+        </Box>)
     return (
         <>
             <TableContainer component={Paper}>
@@ -43,31 +61,32 @@ const BasketPage = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-
-                        <TableRow >
-                            <TableCell>
-
-                                <img src={"/images/products/"} alt="Product" width="50" height="50" />
-
-                            </TableCell>
-                            <TableCell>Product Name</TableCell>
-                            <TableCell>$0.00</TableCell>
-                            <TableCell>
-                                <IconButton color='error' >
-                                    <Remove />
-                                </IconButton>
-                                <IconButton color='error' >
-                                    <Add />
-                                </IconButton>
-                            </TableCell>
-                            <TableCell>0</TableCell>
-                            <TableCell>
-                                <IconButton aria-label="delete">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-
+                        {basket.items.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell>
+                                    {item.pictureUrl && (
+                                        <img src={"/images/products/" + extractImageName(item)} alt="Product" width="50" height="50" />
+                                    )}
+                                </TableCell>
+                                <TableCell>{item.name}</TableCell>
+                                <TableCell>{formatPrice(item.price)}</TableCell>
+                                <TableCell>
+                                    <IconButton color='error' onClick={() => decrementItem(item.id)}>
+                                        <Remove />
+                                    </IconButton>
+                                    {item.quantity}
+                                    <IconButton color='error' onClick={() => incrementItem(item.id)}>
+                                        <Add />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>{formatPrice(item.price * item.quantity)}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => removeItem(item.id)} aria-label="delete">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>

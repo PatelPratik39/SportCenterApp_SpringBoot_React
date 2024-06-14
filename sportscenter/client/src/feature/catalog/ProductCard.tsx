@@ -1,15 +1,24 @@
 
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader,  CircularProgress, CardMedia, Typography } from "@mui/material";
 import { Product } from '../../app/models/products';
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
+import { useAppDispatch } from "../../app/store/ConfigureStores";
+import api from "../../app/api/api";
+import { setBasket } from "../basket/basketSlice";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
     product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
+
+    const [loading, setLoading] = useState(false);
+    const dispatch = useAppDispatch();
+
+
     // adding this styling that can change the Avtar tag to secondary color when user change the screen to dark mode
     const theme = useTheme();
     const avatarColor = theme.palette.mode === 'dark' ? 'secondary.main' : 'primary.main';
@@ -32,13 +41,22 @@ const ProductCard = ({ product }: Props) => {
         }).format(price);
     }
 
-    const titleLength = (title:string, maxLength:number): string => {
-        if(title.length <= maxLength){
+    const titleLength = (title: string, maxLength: number): string => {
+        if (title.length <= maxLength) {
             return title;
         }
         return title.slice(0, maxLength) + '...';
     }
 
+    const addItem = () => {
+        setLoading(true);
+        api.Basket.addItem(product, dispatch)
+            .then(response => {
+                console.log('New Cart : ', response.basket);
+                dispatch(setBasket(response.basket))
+            }).catch(error => console.error(error))
+            .finally(() => setLoading(false))
+    }
 
 
     return (
@@ -49,7 +67,7 @@ const ProductCard = ({ product }: Props) => {
                         {product.name.charAt(0).toUpperCase()}
                     </Avatar>
                 }
-                    title={titleLength(product.name,40)}
+                    title={titleLength(product.name, 40)}
                     titleTypographyProps={{ sx: { fontWeight: 'bold', color: 'primary.main' } }}
                 />
                 <CardMedia
@@ -66,8 +84,15 @@ const ProductCard = ({ product }: Props) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Add to Cart</Button>
-                    <Button component = {Link} to= {`/store/${product.id}`} size="small">View</Button>
+                    <LoadingButton
+                        loading={loading}
+                        onClick={addItem}
+                        size="small"
+                        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+                    >
+                        Add to cart
+                    </LoadingButton> 
+                    <Button component={Link} to={`/store/${product.id}`} size="small">View</Button>
                 </CardActions>
             </Card>
         </>

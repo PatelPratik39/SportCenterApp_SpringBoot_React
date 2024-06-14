@@ -5,7 +5,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { setBasket } from "../../feature/basket/basketSlice.ts";
 import { createId } from "@paralleldrive/cuid2";
 
- class BasketService {
+class BasketService {
 
     apiUrl = "http://localhost:8080/api/cart";
 

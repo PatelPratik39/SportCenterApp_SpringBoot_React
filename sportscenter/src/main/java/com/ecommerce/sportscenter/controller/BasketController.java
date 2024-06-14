@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/baskets")
+@RequestMapping("/api/cart")
 public class BasketController {
 
     private final BasketService basketService;
