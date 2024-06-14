@@ -19,3 +19,8 @@
 <img src="./ss1.png" alt="swagger1" />
 <img src="./ss2.png" alt="swagger2" />
 
+* Server Error Page
+<img src="./serverError.png" alt="swagger2" />
+
+* Page Not Found for any incorrect path
+<img src="./pageNotFound.png" alt="swagger2" />
