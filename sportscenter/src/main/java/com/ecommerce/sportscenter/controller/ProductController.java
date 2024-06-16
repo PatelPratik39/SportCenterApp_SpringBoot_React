@@ -35,7 +35,7 @@ public class ProductController {
 
 //    Get All Products
     @GetMapping()
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Page<ProductResponse>> getAllProducts(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,

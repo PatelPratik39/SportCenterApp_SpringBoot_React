@@ -50,10 +50,10 @@ export default function Catalog() {
     }, [currentPage, pageSize]);
     const loadProducts = (selectedSort, searchKeyword = '') => {
         setLoading(true);
-        let page = currentPage - 1;
-        let size = pageSize;
-        let brandId = selectedBrandId !== 0 ? selectedBrandId : undefined;
-        let typeId = selectedTypeId !== 0 ? selectedTypeId : undefined;
+        const page = currentPage - 1;
+        const size = pageSize;
+        const brandId = selectedBrandId !== 0 ? selectedBrandId : undefined;
+        const typeId = selectedTypeId !== 0 ? selectedTypeId : undefined;
         const sort = "name";
         const order = selectedSort === "desc" ? "desc" : "asc";
         //construct the url

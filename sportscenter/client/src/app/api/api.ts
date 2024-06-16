@@ -114,8 +114,13 @@ const Basket = {
     }
 }
 
+const Account = {
+  login:(values:any) => requests.post('auth/login',values)
+}
+
 const api = {
     Store,
-    Basket
+    Basket,
+    Account
 }
 export default api;
