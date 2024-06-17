@@ -12,6 +12,18 @@
 	<artifactId>spring-boot-starter-data-redis</artifactId>
 	<version>3.3.0</version>
 </dependency>
+<!-- MapStruct dependencies -->
+<dependency>
+	<groupId>org.mapstruct</groupId>
+	<artifactId>mapstruct</artifactId>
+	<version>1.5.2.Final</version>
+</dependency>
+<dependency>
+	<groupId>org.mapstruct</groupId>
+	<artifactId>mapstruct-processor</artifactId>
+	<version>1.5.2.Final</version>
+	<scope>provided</scope>
+</dependency>
 ```
 
 # API End point validation usnig Swagger - UI
@@ -31,3 +43,9 @@
 <img src="./cartItems.png" alt="Cart" />
 
 <img src="./store1.png" alt="Store Page" />
+
+<img src="./Swagger2.png" alt="Store Page" />
+<img src="./UpdateCart1.png" alt="UpdateCart Page" />
+<img src="./UpdateCart2.png" alt="UpdateCart Page" />
+<img src="./UpdateCart3.png" alt="UpdateCart Page" />
+<img src="./UpdateCart4.png" alt="UpdateCart Page" />
