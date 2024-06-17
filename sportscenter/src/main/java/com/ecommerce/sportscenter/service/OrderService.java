@@ -13,7 +13,7 @@ public interface OrderService {
 
     List<OrderResponse> getAllOrders();
 
-    Page<OrderResponse> getAllOrder(Pageable pageable);
+    Page<OrderResponse> getAllOrders(Pageable pageable);
 
     Integer createOrder(OrderDto order);
 

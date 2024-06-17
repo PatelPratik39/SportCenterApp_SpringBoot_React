@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderResponse> getAllOrder(Pageable pageable) {
+    public Page<OrderResponse> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable).map(orderMapper::OrderToOrderResponse);
     }
 
@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
     public Integer createOrder(OrderDto orderDto) {
 //        fetching Basket Details
         BasketResponse basketResponse = basketService.getBasketById(orderDto.getBasketId());
-        if(basketResponse ==null){
+        if(basketResponse == null){
             log.error("Basket with ID {} not found ", orderDto.getBasketId());
             return null;
         }
