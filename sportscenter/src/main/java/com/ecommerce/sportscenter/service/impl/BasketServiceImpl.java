@@ -69,9 +69,6 @@ public class BasketServiceImpl implements BasketService {
 
 
 
-
-
-
     private BasketResponse convertToBasketResponse(Basket basket) {
         if(basket == null){
             return null;

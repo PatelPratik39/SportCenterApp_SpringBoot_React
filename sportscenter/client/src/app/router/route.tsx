@@ -10,7 +10,6 @@ import BasketPage from "../../feature/basket/BasketPage"
 import SignInPage from "../../feature/account/SignInPage"
 import RegisterPage from "../../feature/account/RegisterPage"
 
-
 export const router = createBrowserRouter([
 
     {

@@ -18,18 +18,23 @@ public class BasketController {
 
     private final BasketService basketService;
 
-
     public BasketController(BasketService basketService) {
         this.basketService = basketService;
     }
 
     @PostMapping
     public ResponseEntity<BasketResponse> createBasket(@RequestBody BasketResponse basketResponse){
+        // Log the incoming request
+        System.out.println("Received basket: " + basketResponse);
+
         //convert this basket response to basket entity
         Basket basket = convertToBasketEntity(basketResponse);
         //call the service method to create the basket
         BasketResponse createdBasket = basketService.createBasket(basket);
         //Return the Created Basket
+
+        // Log the created basket response
+        System.out.println("Created basket: " + createdBasket);
         return new ResponseEntity<>(createdBasket, HttpStatus.CREATED);
     }
 

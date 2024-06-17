@@ -3,6 +3,7 @@ import { AppBar, Badge, Box, IconButton, List, ListItem, Switch, Toolbar, Typogr
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/ConfigureStores";
 import { useEffect } from "react";
+import SignedInMenu from "./SignedInMenu";
 
 
 const navLinks = [
@@ -36,16 +37,18 @@ interface Props {
 
 
 const Header = ({ darkMode, handleThemeChange }: Props) => {
-const {basket} = useAppSelector(state => state.basket);
-console.log('Basket : ', basket);
+    const { basket } = useAppSelector(state => state.basket);
+    const { user } = useAppSelector(state => state.account);
 
-// This useeffect update the cart items 
+    console.log('Basket : ', basket);
 
-useEffect(() => {
-    console.log('Basket Items : ' , basket?.items);
-}, [basket])
+    // This useeffect update the cart items 
 
-const itemCount = basket?.items?.reduce((sum, item) => sum+item.quantity, 0) || 0;
+    useEffect(() => {
+        console.log('Basket Items : ', basket?.items);
+    }, [basket])
+
+    const itemCount = basket?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
     return (
         <>
@@ -66,18 +69,21 @@ const itemCount = basket?.items?.reduce((sum, item) => sum+item.quantity, 0) || 
                         ))}
                     </List>
                     <Box display='flex' alignItems='center'>
-                        <IconButton  component={Link} to='/cart' size="large" edge='start' color="inherit" sx={{ mr: 2 }}>
+                        <IconButton component={Link} to='/cart' size="large" edge='start' color="inherit" sx={{ mr: 2 }}>
                             <Badge badgeContent={itemCount} color="secondary">
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>
-                        <List sx={{ display: 'flex' }}>
-                            {accountLinks.map(({ title, path }) => (
-                                <ListItem component={NavLink} to={path} key={path} sx={navStyle}>
-                                    {title}
-                                </ListItem>
-                            ))}
-                        </List>
+                        {user ? (<SignedInMenu />) : (
+                            <List sx={{ display: 'flex' }}>
+                                {accountLinks.map(({ title, path }) => (
+                                    <ListItem component={NavLink} to={path} key={path} sx={navStyle}>
+                                        {title}
+                                    </ListItem>
+                                ))}
+                            </List>
+                        )}
+
                     </Box>
                 </Toolbar>
             </AppBar>
