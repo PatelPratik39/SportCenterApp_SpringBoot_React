@@ -9,6 +9,8 @@ import ServerError from "../errors/ServerError"
 import BasketPage from "../../feature/basket/BasketPage"
 import SignInPage from "../../feature/account/SignInPage"
 import RegisterPage from "../../feature/account/RegisterPage"
+import RequireAuth from "./RequireAuth"
+import CheckoutPage from "../../feature/checkout/CheckoutPage"
 
 export const router = createBrowserRouter([
 
@@ -16,6 +18,12 @@ export const router = createBrowserRouter([
         path: '/',
         element: <App />,
         children: [
+            {
+                element: <RequireAuth/>, children : [
+                    {path:'checkout', element:<CheckoutPage />},
+                    // {path:'orders', element:<Order />}
+                ]
+            },
             { path: '', element: <Home /> },
             { path: 'store', element: <Catalog /> },
             { path: 'store/:id', element: <ProductDetails /> },
