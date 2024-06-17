@@ -33,7 +33,7 @@
 <img src="./store1.png" alt="Store Page" />
 
 <img src="./Swagger2.png" alt="Store Page" />
-<img src="./UpdateCart1" alt="UpdateCart Page" />
-<img src="./UpdateCart2" alt="UpdateCart Page" />
-<img src="./UpdateCart3" alt="UpdateCart Page" />
-<img src="./UpdateCart4" alt="UpdateCart Page" />
+<img src="./UpdateCart1.png" alt="UpdateCart Page" />
+<img src="./UpdateCart2.png" alt="UpdateCart Page" />
+<img src="./UpdateCart3.png" alt="UpdateCart Page" />
+<img src="./UpdateCart4.png" alt="UpdateCart Page" />
