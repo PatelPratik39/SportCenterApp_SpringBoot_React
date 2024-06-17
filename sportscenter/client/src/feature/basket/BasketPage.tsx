@@ -5,6 +5,7 @@ import { Add, Remove } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store/ConfigureStores";
 import api from "../../app/api/api";
+import BasketSummery from "./BasketSummery";
 
 
 const BasketPage = () => {
@@ -44,7 +45,7 @@ const BasketPage = () => {
     };
     if (!basket || basket.items.length === 0) return (
         <Box display="flex" justifyContent="center" alignItems="center" height="20vh">
-            <Typography variant="h3">Your basket is empty!!!</Typography>
+            <Typography variant="h3">Your Cart is empty!!!</Typography>
         </Box>)
     return (
         <>
@@ -91,16 +92,18 @@ const BasketPage = () => {
                 </Table>
             </TableContainer>
             <Box mt={2} p={2} bgcolor="background.paper" borderRadius={4}>
-                {/* <BasketSummary /> */}
-                <Button
-                    component={Link}
-                    to='/checkout'
-                    variant='contained'
-                    size='large'
-                    fullWidth
-                >
-                    Checkout
-                </Button>
+                <BasketSummery />
+                <Box mt={3}>
+                    <Button
+                        component={Link}
+                        to='/checkout'
+                        variant='contained'
+                        size='large'
+                        fullWidth
+                    >
+                        Checkout
+                    </Button>
+                </Box>
             </Box>
         </>
     )

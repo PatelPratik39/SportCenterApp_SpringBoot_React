@@ -29,9 +29,9 @@ export default function ProductDetails() {
   };
 
   const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'INR',
+      currency: 'USD',
       minimumFractionDigits: 2
     }).format(price);
   };
