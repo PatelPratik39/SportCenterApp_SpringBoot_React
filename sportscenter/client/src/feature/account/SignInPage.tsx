@@ -5,7 +5,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { store, useAppDispatch } from "../../app/store/ConfigureStores";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-// import { signInUser } from "./accountSlice";
+import { sigInUser } from "./accountSlice";
+
 
 
 export default function SignInPage() {
@@ -18,21 +19,23 @@ export default function SignInPage() {
 
     async function submitForm(data: FieldValues) {
         try {
-            //dispatching the sign in action
-            await dispatch(signInUser(data));
-            //check if the user is logged in
+            // dispatching Sign In action
+            await dispatch(sigInUser(data));
+            // check if User is logged In
             const { user } = store.getState().account;
             if (user) {
-                //navigate it to store page
+                // navigated to store page
                 navigate(location.state?.from || '/store');
             } else {
-                toast.error('Sign in Failed. Please try again');
+                toast.error('Sign in Failed. Please try again')
             }
+
         } catch (error) {
-            console.log('Error signing in:', error);
-            toast.error('Sign in Failed. Please try again');
+            console.log('Error signing in : ', error);
+            toast.error('SignIn failed. Please try again')
         }
     }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
