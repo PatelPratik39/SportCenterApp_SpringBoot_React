@@ -12,6 +12,18 @@
 	<artifactId>spring-boot-starter-data-redis</artifactId>
 	<version>3.3.0</version>
 </dependency>
+<!-- MapStruct dependencies -->
+<dependency>
+	<groupId>org.mapstruct</groupId>
+	<artifactId>mapstruct</artifactId>
+	<version>1.5.2.Final</version>
+</dependency>
+<dependency>
+	<groupId>org.mapstruct</groupId>
+	<artifactId>mapstruct-processor</artifactId>
+	<version>1.5.2.Final</version>
+	<scope>provided</scope>
+</dependency>
 ```
 
 # API End point validation usnig Swagger - UI
