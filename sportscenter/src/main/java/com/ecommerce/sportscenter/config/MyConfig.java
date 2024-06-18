@@ -16,11 +16,17 @@ public class MyConfig {
     public UserDetailsService userDetailsService() {
         UserDetails userDetails = User.builder()
                 .username("User1")
-                .password(passwordEncoder().encode("Password"))
+                .password(passwordEncoder().encode("password"))
                 .roles("admin")
                 .build();
         return  new InMemoryUserDetailsManager(userDetails);
     }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return new UserServiceImpl();
+//    }
+
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
