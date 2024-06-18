@@ -117,8 +117,9 @@ const Basket = {
 const Account = {
   login:(values:any) => requests.post('auth/login',values)
 }
-const Orders = {
-  list: () => requests.get('orders'),
+
+const Orders ={
+  list:() => requests.get('orders'),
   fetch:(id:number) => requests.get(`orders/${id}`),
   create:(values:any) => requests.post('orders', values)
 }

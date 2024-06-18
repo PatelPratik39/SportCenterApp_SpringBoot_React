@@ -1,11 +1,10 @@
 import { Grid, TextField, Typography } from "@mui/material";
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from "react-hook-form"
 
-const AddressForm = () => {
+export default function AddressForm() {
     const { register, formState: { errors } } = useFormContext();
     return (
         <>
-
             <Typography variant="h6" gutterBottom>
                 Shipping Address
             </Typography>
@@ -117,5 +116,3 @@ const AddressForm = () => {
         </>
     )
 }
-
-export default AddressForm
